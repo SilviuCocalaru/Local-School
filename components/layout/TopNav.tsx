@@ -37,7 +37,7 @@ export default function TopNav() {
           damping: 25, 
           stiffness: 200,
         }}
-        className="h-12 sm:h-14 md:h-16 px-3 sm:px-4 md:px-6 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[100px] saturate-[200%] border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)] flex items-center gap-1.5 sm:gap-2 md:gap-3 overflow-hidden"
+        className="h-12 sm:h-14 md:h-16 px-3 sm:px-4 md:px-6 rounded-full bg-white/40 dark:bg-white/10 backdrop-blur-[20px] saturate-[180%] border border-white/50 dark:border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center gap-1.5 sm:gap-2 md:gap-3 overflow-hidden transition-all duration-300 hover:bg-white/45 dark:hover:bg-white/15"
       >
         {/* Logo/Title */}
         <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-black dark:text-white mr-1 sm:mr-2 md:mr-4 lg:mr-6 flex-shrink-0 truncate">
