@@ -1,55 +1,26 @@
 import { createBrowserClient } from "@supabase/ssr";
 
-export function createClient() {
+export const createClient = () => {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() {
-          return document.cookie.split(";").map((cookie) => {
-            const trimmed = cookie.trim();
-            const [name, ...rest] = trimmed.split("=");
-            const value = rest.join("=");
-            // Return as-is - Supabase will handle encoding/decoding
-            return { name: name.trim(), value: value.trim() };
-          });
+        get(name: string) {
+          const cookie = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith(`${name}=`));
+          return cookie ? cookie.split("=")[1] : null;
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            // Build cookie string - use value as-is, browser will handle encoding
-            let cookieString = `${name}=${value}`;
-            
-            // Set path
-            cookieString += `; Path=${options?.path || "/"}`;
-            
-            // Set max age
-            if (options?.maxAge) {
-              cookieString += `; Max-Age=${options.maxAge}`;
-            } else if (options?.expires) {
-              cookieString += `; Expires=${options.expires.toUTCString()}`;
-            }
-            
-            // Set SameSite
-            const sameSite = options?.sameSite || "lax";
-            cookieString += `; SameSite=${sameSite}`;
-            
-            // Set domain (skip for localhost)
-            if (options?.domain && !options.domain.includes("localhost")) {
-              cookieString += `; Domain=${options.domain}`;
-            }
-            
-            // Set secure flag
-            if (options?.secure) {
-              cookieString += `; Secure`;
-            }
-            
-            console.log("Setting cookie:", name, "Length:", value.length);
-            document.cookie = cookieString;
-          });
+        set(name: string, value: string, options: any) {
+          document.cookie = `${name}=${value}; path=/; ${
+            options?.maxAge ? `max-age=${options.maxAge};` : ""
+          }`;
+        },
+        remove(name: string, options: any) {
+          document.cookie = `${name}=; path=/; max-age=0`;
         },
       },
     }
   );
-}
-
+};
