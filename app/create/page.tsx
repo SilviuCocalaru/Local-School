@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { FiX, FiUpload, FiVideo, FiImage } from "react-icons/fi";
 
 export const dynamic = 'force-dynamic';
 
-export default function CreatePostPage() {
+function CreatePostContent() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [caption, setCaption] = useState("");
@@ -212,3 +212,14 @@ export default function CreatePostPage() {
   );
 }
 
+export default function CreatePostPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    }>
+      <CreatePostContent />
+    </Suspense>
+  );
+}
