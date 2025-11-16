@@ -147,23 +147,33 @@ export default function VideoCard({ video, onSwipe, isActive }: VideoCardProps) 
           )}
 
           {/* Actions */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 pointer-events-auto">
             <button
+              type="button"
               onClick={handleLike}
               className={`flex flex-col items-center gap-1 ${
                 isLiked ? "text-red-500" : "text-white"
-              }`}
+              } hover:opacity-80 active:scale-90 transition-all`}
+              aria-label={isLiked ? "Unlike video" : "Like video"}
             >
               <FiHeart
                 className={`text-3xl ${isLiked ? "fill-current" : ""}`}
               />
               <span className="text-xs font-medium">{likesCount}</span>
             </button>
-            <button className="flex flex-col items-center gap-1 text-white">
+            <button
+              type="button"
+              className="flex flex-col items-center gap-1 text-white hover:opacity-80 active:scale-90 transition-all"
+              aria-label="Comment on video"
+            >
               <FiMessageCircle className="text-3xl" />
               <span className="text-xs font-medium">Comment</span>
             </button>
-            <button className="flex flex-col items-center gap-1 text-white">
+            <button
+              type="button"
+              className="flex flex-col items-center gap-1 text-white hover:opacity-80 active:scale-90 transition-all"
+              aria-label="Share video"
+            >
               <FiShare2 className="text-3xl" />
               <span className="text-xs font-medium">Share</span>
             </button>
@@ -172,8 +182,10 @@ export default function VideoCard({ video, onSwipe, isActive }: VideoCardProps) 
 
         {/* Play/Pause Button */}
         <button
+          type="button"
           onClick={togglePlay}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass-strong rounded-full p-4 pointer-events-auto"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass-strong rounded-full p-4 pointer-events-auto hover:scale-110 active:scale-95 transition-all"
+          aria-label={isPlaying ? "Pause video" : "Play video"}
         >
           {isPlaying ? (
             <FiPause className="text-3xl text-white" />

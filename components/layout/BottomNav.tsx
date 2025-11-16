@@ -22,8 +22,8 @@ export default function BottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none max-w-md sm:max-w-lg md:max-w-2xl w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)]">
-      <div className="pointer-events-auto">
+    <nav className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-md sm:max-w-lg md:max-w-2xl w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] pointer-events-auto">
+      <div>
         <motion.div
           initial={{ y: 100, opacity: 0, scale: 0.8 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -57,9 +57,10 @@ export default function BottomNav() {
                   />
                 )}
                 <motion.button
+                  type="button"
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: isActive ? 1 : 1.05 }}
-                  className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center transition-all duration-300 touch-target ${
+                  className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center transition-all duration-300 touch-target active:scale-90 ${
                     isActive
                       ? ""
                       : "bg-white/5 backdrop-blur-[80px] saturate-[200%] border border-white/15 hover:bg-white/10"

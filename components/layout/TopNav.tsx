@@ -82,10 +82,11 @@ export default function TopNav() {
 
         {/* Create Button */}
         <motion.button
+          type="button"
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.1 }}
           onClick={handleCreate}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 flex items-center justify-center hover:bg-white/10 dark:hover:bg-black/40 transition-all duration-300 touch-target flex-shrink-0"
+          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 flex items-center justify-center hover:bg-white/10 dark:hover:bg-black/40 active:scale-90 transition-all duration-300 touch-target flex-shrink-0"
           aria-label="Create new post"
         >
           <FiPlus className="w-4 h-4 sm:w-5 sm:h-5 transition-all" />

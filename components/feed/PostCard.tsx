@@ -253,12 +253,14 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
           <div className="flex items-center gap-4">
             {/* Like Button */}
             <button
+              type="button"
               onClick={(e) => {
                 createRipple(e);
                 handleLike();
               }}
               className="p-2 -m-2 hover:opacity-60 transition-opacity duration-200 active:scale-90"
               title={`${likesCount} likes`}
+              aria-label={isLiked ? "Unlike post" : "Like post"}
             >
               <FiHeart
                 className={`w-6 h-6 transition-all duration-200 ${
@@ -271,24 +273,28 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
 
             {/* Comment Button */}
             <button
+              type="button"
               onClick={(e) => {
                 createRipple(e);
                 setShowComments(!showComments);
               }}
               className="p-2 -m-2 hover:opacity-60 transition-opacity duration-200 active:scale-90"
               title={`${comments.length} comments`}
+              aria-label="View comments"
             >
               <FiMessageCircle className="w-6 h-6 text-black dark:text-white" />
             </button>
 
             {/* Share Button */}
             <button
+              type="button"
               onClick={(e) => {
                 createRipple(e);
                 handleShare();
               }}
               className="p-2 -m-2 hover:opacity-60 transition-opacity duration-200 active:scale-90"
               title="Share"
+              aria-label="Share post"
             >
               <FiShare2 className="w-6 h-6 text-black dark:text-white" />
             </button>
@@ -317,8 +323,10 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
         {/* Comments Count Link */}
         {comments.length > 0 && !showComments && (
           <button
+            type="button"
             onClick={() => setShowComments(true)}
             className="w-full px-4 py-2 text-left text-sm text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
+            aria-label={`View all ${comments.length} comments`}
           >
             View all {comments.length} {comments.length === 1 ? "comment" : "comments"}
           </button>
@@ -377,9 +385,11 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
                 className="flex-1 px-3 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all duration-200"
               />
               <button
+                type="button"
                 onClick={handleComment}
                 disabled={!commentText.trim()}
                 className="px-3 py-2 text-sm font-semibold text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 disabled:text-gray-300 dark:disabled:text-gray-700 disabled:cursor-not-allowed transition-colors duration-200"
+                aria-label="Post comment"
               >
                 Post
               </button>
