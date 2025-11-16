@@ -94,15 +94,16 @@ export default function UserSearch() {
       {/* Search Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="p-2 hover:bg-white/10 dark:hover:bg-white/5 rounded-full transition-colors"
+        className="p-2 hover:bg-white/10 dark:hover:bg-white/5 rounded-full transition-colors pointer-events-auto"
         aria-label="Search"
+        type="button"
       >
         <FiSearch className="w-5 h-5" />
       </button>
 
       {/* Search Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center p-4 pt-16">
+        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center p-4 pt-16 pointer-events-auto">
           <div className="card-glass w-full max-w-2xl rounded-3xl shadow-depth-lg">
             {/* Search Input */}
             <div className="p-4 border-b border-white/10 dark:border-white/5">

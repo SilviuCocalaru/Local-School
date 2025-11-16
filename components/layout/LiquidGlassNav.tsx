@@ -74,14 +74,18 @@ const LiquidGlassNav = React.memo(() => {
   const isAuthPage = pathname?.includes("/auth") || pathname === "/login" || pathname === "/signup";
   if (isAuthPage) return null;
 
+  if (!isMounted) return null;
+
   return (
-    <div
-      className={`fixed bottom-0 left-0 right-0 z-40 flex justify-center items-end px-4 pb-safe transition-transform duration-800 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-        isVisible ? "translate-y-0" : "translate-y-full"
-      }`}
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 flex justify-center items-end px-4 pb-safe pointer-events-none"
+      style={{ maxHeight: "120px" }}
     >
       {/* Navigation container - smaller, optimized */}
-      <div className="relative p-2 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm mb-6 will-change-transform flex items-center gap-2" style={{ maxWidth: "fit-content" }}>
+      <div 
+        className="relative p-2 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg mb-4 will-change-transform flex items-center gap-2 pointer-events-auto" 
+        style={{ maxWidth: "fit-content" }}
+      >
         {/* Top toolbar - Search, Notifications, Language */}
         <div className="flex items-center gap-1 px-2 border-r border-white/10 dark:border-white/5">
           <UserSearch />
@@ -153,7 +157,7 @@ const LiquidGlassNav = React.memo(() => {
           100% { transform: translateX(100%); }
         }
       `}</style>
-    </div>
+    </nav>
   );
 });
 
