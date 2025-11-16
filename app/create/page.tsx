@@ -72,6 +72,31 @@ function CreatePostContent() {
     setUploading(true);
 
     try {
+      // Ensure user profile exists in public.users table
+      const { data: existingUser, error: fetchError } = await supabase
+        .from("users")
+        .select("id")
+        .eq("id", user.id)
+        .single();
+
+      if (fetchError && fetchError.code !== "PGRST116") {
+        throw fetchError;
+      }
+
+      if (!existingUser) {
+        // User profile doesn't exist, create it
+        const { error: createUserError } = await supabase
+          .from("users")
+          .insert({
+            id: user.id,
+            email: user.email,
+            name: user.user_metadata?.name || "User",
+            school: user.user_metadata?.school || "Liceul Ciprian Porumbescu",
+          });
+
+        if (createUserError) throw createUserError;
+      }
+
       // Upload file to Supabase Storage
       const fileExt = file.name.split(".").pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
