@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import UserProfile from "@/components/profile/UserProfile";
-import TopNav from "@/components/layout/TopNav";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 
 export default function ProfilePage() {
@@ -40,8 +39,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen">
-      <TopNav />
-      <div className="max-w-2xl mx-auto pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto pt-4 sm:pt-6 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-40">
           <ThemeToggle />
         </div>
