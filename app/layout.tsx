@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { I18nProvider } from "@/lib/i18n/i18nProvider";
 import LiquidGlassNav from "@/components/layout/LiquidGlassNav";
 
 export const metadata: Metadata = {
@@ -15,10 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sf-pro antialiased pb-safe">
+      <body className="font-sf-pro antialiased pb-safe bg-white dark:bg-slate-950">
         <ThemeProvider>
-          <main>{children}</main>
-          <LiquidGlassNav />
+          <I18nProvider>
+            <main>{children}</main>
+            <LiquidGlassNav />
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

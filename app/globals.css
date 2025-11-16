@@ -517,7 +517,7 @@ body {
   }
 }
 
-/* Prevent text selection on mobile for better UX */
+  /* Prevent text selection on mobile for better UX */
 .no-select {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -525,3 +525,203 @@ body {
   user-select: none;
 }
 
+/* ============================================
+   LIGHT THEME TEXT & COLOR FIXES
+   ============================================ */
+
+.light {
+  color-scheme: light;
+}
+
+.light body {
+  background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+  color: #1c1c1e;
+}
+
+/* Light theme text colors - high contrast */
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6,
+.light p,
+.light span,
+.light button,
+.light a {
+  color: #1c1c1e;
+}
+
+.light button:not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-green"]) {
+  color: #1c1c1e;
+}
+
+.light input,
+.light textarea,
+.light select {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #1c1c1e;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Light theme glass components */
+.light .liquid-glass,
+.light .glass,
+.light .glass-strong {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #1c1c1e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.light .liquid-glass-active,
+.light .glass-active {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Light theme card text */
+.light .card,
+.light .post-card {
+  background: rgba(255, 255, 255, 0.6);
+  color: #1c1c1e;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Light theme labels and captions */
+.light .text-gray-600,
+.light .text-slate-600 {
+  color: #666666 !important;
+}
+
+.light .text-gray-700,
+.light .text-slate-700 {
+  color: #333333 !important;
+}
+
+.light .text-gray-400,
+.light .text-slate-400 {
+  color: #999999 !important;
+}
+
+/* Light theme borders */
+.light .border-gray-200,
+.light .border-slate-200,
+.light .divide-gray-200,
+.light .divide-slate-200 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Light theme hover states */
+.light button:hover:not([class*="text-red"]):not([class*="text-blue"]) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.light a:hover {
+  color: #007AFF;
+}
+
+/* Light theme scrollbar */
+.light ::-webkit-scrollbar {
+  background: transparent;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================
+   ENHANCED GLASSMORPHISM UTILITIES
+   ============================================ */
+
+/* Card with glass effect */
+.card-glass {
+  @apply rounded-3xl p-4 backdrop-blur-xl;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card-glass {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.light .card-glass {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Button with glass effect */
+.btn-glass {
+  @apply px-4 py-2 rounded-2xl font-medium transition-all duration-200;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.light .btn-glass {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1c1c1e;
+}
+
+.light .btn-glass:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Modal backdrop with glass effect */
+.modal-backdrop-glass {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.light .modal-backdrop-glass {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Depth shadow utility */
+.shadow-depth-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-depth-md {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-depth-lg {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+.dark .shadow-depth-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-depth-md {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dark .shadow-depth-lg {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}

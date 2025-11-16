@@ -1,52 +1,54 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FiHome, FiVideo, FiMessageCircle, FiUser } from "react-icons/fi";
+import { FiHome, FiVideo, FiMessageCircle, FiUser, FiBell } from "react-icons/fi";
+import UserSearch from "@/components/search/UserSearch";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 
 interface BubbleStyle {
   left: number;
   width: number;
 }
 
-const navItems = [
-  { icon: FiHome, label: "Home", path: "/feed" },
-  { icon: FiVideo, label: "Videos", path: "/videos" },
-  { icon: FiMessageCircle, label: "Chat", path: "/chat" },
-  { icon: FiUser, label: "Profile", path: "/profile" },
-];
-
-const CONTAINER_PADDING = 8;
-const BUTTON_WIDTH = 56;
-const BUBBLE_WIDTH = 48;
-const GAP = 16;
-
 const LiquidGlassNav = React.memo(() => {
   const router = useRouter();
   const pathname = usePathname();
-
+  const [isMounted, setIsMounted] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const [bubbleStyle, setBubbleStyle] = useState<BubbleStyle>({ left: 0, width: BUBBLE_WIDTH });
+  const [bubbleStyle, setBubbleStyle] = useState<BubbleStyle>({ left: 0, width: 48 });
   const [isVisible, setIsVisible] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
 
-  // Check if on auth page
-  const isAuthPage = pathname?.includes("/auth") || pathname === "/login" || pathname === "/signup";
+  const CONTAINER_PADDING = 8;
+  const BUTTON_WIDTH = 56;
+  const BUBBLE_WIDTH = 48;
+  const GAP = 16;
 
-  // Calculate position for a given tab index
+  // Static labels instead of i18n to avoid SSG context issues
+  const navItems = [
+    { icon: FiHome, label: "Home", path: "/feed" },
+    { icon: FiVideo, label: "Videos", path: "/videos" },
+    { icon: FiMessageCircle, label: "Messages", path: "/chat" },
+    { icon: FiUser, label: "Profile", path: "/profile" },
+  ];
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const calculatePosition = (tabIndex: number): { left: number } => {
     const targetButtonLeft = CONTAINER_PADDING + tabIndex * (BUTTON_WIDTH + GAP);
     const targetLeft = targetButtonLeft + BUTTON_WIDTH / 2 - BUBBLE_WIDTH / 2;
     return { left: targetLeft };
   };
 
-  // Initialize and entrance animation
   useEffect(() => {
     const initialPos = calculatePosition(0);
     setBubbleStyle({ left: initialPos.left, width: BUBBLE_WIDTH });
     setTimeout(() => setIsVisible(true), 300);
   }, []);
 
-  // Sync active tab with current URL
   useEffect(() => {
     if (pathname?.includes("/feed") || pathname === "/") {
       setActiveTab(0);
@@ -59,7 +61,6 @@ const LiquidGlassNav = React.memo(() => {
     }
   }, [pathname]);
 
-  // Handle tab change with simplified CSS-only animation
   useEffect(() => {
     const newPos = calculatePosition(activeTab);
     setBubbleStyle({ left: newPos.left, width: BUBBLE_WIDTH });
@@ -70,6 +71,7 @@ const LiquidGlassNav = React.memo(() => {
     router.push(path);
   };
 
+  const isAuthPage = pathname?.includes("/auth") || pathname === "/login" || pathname === "/signup";
   if (isAuthPage) return null;
 
   return (
@@ -79,10 +81,24 @@ const LiquidGlassNav = React.memo(() => {
       }`}
     >
       {/* Navigation container - smaller, optimized */}
-      <div
-        className="relative p-2 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm mb-6 will-change-transform"
-        style={{ maxWidth: "calc(100vw - 32px)" }}
-      >
+      <div className="relative p-2 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm mb-6 will-change-transform flex items-center gap-2" style={{ maxWidth: "fit-content" }}>
+        {/* Top toolbar - Search, Notifications, Language */}
+        <div className="flex items-center gap-1 px-2 border-r border-white/10 dark:border-white/5">
+          <UserSearch />
+          <button
+            className="p-2 hover:bg-white/10 dark:hover:bg-white/5 rounded-full transition-colors relative"
+            aria-label="Notifications"
+          >
+            <FiBell className="w-5 h-5" />
+            {notificationCount > 0 && (
+              <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                {notificationCount}
+              </span>
+            )}
+          </button>
+          <LanguageSwitcher />
+        </div>
+
         {/* Animated bubble - GPU accelerated */}
         <div
           style={{
@@ -99,10 +115,7 @@ const LiquidGlassNav = React.memo(() => {
             willChange: "transform, width",
           }}
         >
-          {/* Main glass layer only - minimal layers */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-200/25 via-purple-300/15 to-pink-200/20 backdrop-blur-xl border border-purple-200/30" />
-
-          {/* Subtle top highlight */}
           <div
             className="absolute inset-0 rounded-full"
             style={{
@@ -113,7 +126,7 @@ const LiquidGlassNav = React.memo(() => {
         </div>
 
         {/* Navigation buttons */}
-        <div className="relative z-10 flex items-center gap-4">
+        <div className="relative z-10 flex items-center gap-4 pl-2">
           {navItems.map((item, index) => {
             const Icon = item.icon;
             const isActive = index === activeTab;
@@ -134,7 +147,6 @@ const LiquidGlassNav = React.memo(() => {
         </div>
       </div>
 
-      {/* Animations */}
       <style>{`
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
