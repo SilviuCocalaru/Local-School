@@ -82,7 +82,7 @@ export default function ChatRoom({ receiverId }: ChatRoomProps) {
     }
   };
 
-  const subscribeToMessages = () => {
+  const subscribeToMessages = async () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
