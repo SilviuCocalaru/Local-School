@@ -6,6 +6,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { FiMail, FiLock, FiUser, FiArrowRight } from "react-icons/fi";
 
+export const dynamic = 'force-dynamic';
+
 const SCHOOLS = ["Liceul Ciprian Porumbescu", "Stefan Neaga"];
 
 export default function SignUpPage() {

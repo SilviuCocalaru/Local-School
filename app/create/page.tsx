@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { FiX, FiUpload, FiVideo, FiImage } from "react-icons/fi";
 
+export const dynamic = 'force-dynamic';
+
 export default function CreatePostPage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
