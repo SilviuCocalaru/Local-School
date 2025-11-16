@@ -15,7 +15,6 @@ const navItems = [
 
 export default function TopNav() {
   const pathname = usePathname();
-  const router = usePathname();
 
   const hapticFeedback = () => {
     if ('vibrate' in navigator) {
@@ -64,6 +63,7 @@ export default function TopNav() {
                     ? "bg-white/15 dark:bg-black/50 backdrop-blur-[80px] saturate-[180%] border border-white/25 dark:border-white/20"
                     : "bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 hover:bg-white/10 dark:hover:bg-black/40"
                 }`}
+                aria-label={item.label}
               >
                 <Icon 
                   className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 ${
@@ -86,6 +86,7 @@ export default function TopNav() {
           whileHover={{ scale: 1.1 }}
           onClick={handleCreate}
           className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 flex items-center justify-center hover:bg-white/10 dark:hover:bg-black/40 transition-all duration-300 touch-target flex-shrink-0"
+          aria-label="Create new post"
         >
           <FiPlus className="w-4 h-4 sm:w-5 sm:h-5 transition-all" />
         </motion.button>

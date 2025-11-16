@@ -64,7 +64,7 @@ export default function UserProfile({
         setPosts(transformedPosts);
       }
     } catch (error) {
-      console.error("Error loading profile:", error);
+      // Error handled silently - user sees loading state or retry
     } finally {
       setLoading(false);
     }

@@ -65,7 +65,7 @@ export default function SearchBar({ compact = false }: SearchBarProps) {
           setResults(data);
         }
       } catch (error) {
-        console.error("Search error:", error);
+        // Search error handled silently
       } finally {
         setLoading(false);
       }

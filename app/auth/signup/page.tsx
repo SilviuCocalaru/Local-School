@@ -103,7 +103,7 @@ export default function SignUpPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
+                className="w-full pl-12 pr-4 py-3 sm:py-4 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-base dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
                 placeholder="Full name"
               />
             </div>
@@ -120,7 +120,7 @@ export default function SignUpPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
+                className="w-full pl-12 pr-4 py-3 sm:py-4 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-base dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
                 placeholder="your@email.com"
               />
             </div>
@@ -134,7 +134,7 @@ export default function SignUpPage() {
               value={school}
               onChange={(e) => setSchool(e.target.value)}
               required
-              className="w-full px-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
+              className="w-full px-4 py-3 sm:py-4 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-base dark:text-white focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
             >
               <option value="" className="bg-gray-800">
                 Select your school

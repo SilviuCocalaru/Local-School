@@ -21,9 +21,21 @@ export default function ChatRoom({ receiverId }: ChatRoomProps) {
   const supabase = createClient();
 
   useEffect(() => {
-    loadReceiver();
-    loadMessages();
-    subscribeToMessages();
+    let unsubscribeCleanup: (() => void) | undefined;
+    
+    const setupSubscription = async () => {
+      await loadReceiver();
+      await loadMessages();
+      unsubscribeCleanup = await subscribeToMessages();
+    };
+    
+    setupSubscription();
+    
+    return () => {
+      if (unsubscribeCleanup) {
+        unsubscribeCleanup();
+      }
+    };
   }, [receiverId]);
 
   useEffect(() => {
@@ -76,7 +88,7 @@ export default function ChatRoom({ receiverId }: ChatRoomProps) {
           .eq("read", false);
       }
     } catch (error) {
-      console.error("Error loading messages:", error);
+      // Error handled silently
     } finally {
       setLoading(false);
     }

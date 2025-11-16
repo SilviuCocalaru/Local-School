@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -41,8 +41,8 @@ export default function MessagesList({ messages }: MessagesListProps) {
             <div
               className={`max-w-[75%] glass rounded-2xl p-3 ${
                 isOwn
-                  ? "                  ? \"bg-white/15 dark:bg-black/40\"\n                  : \"bg-white/10 dark:bg-black/30\""
-                  : "bg-white/10"
+                  ? "bg-white/15 dark:bg-black/40"
+                  : "bg-white/10 dark:bg-black/30"
               }`}
             >
               {!isOwn && (
@@ -50,8 +50,8 @@ export default function MessagesList({ messages }: MessagesListProps) {
                   {message.sender?.name}
                 </p>
               )}
-              <p className=\"text-black dark:text-white text-sm\">{message.content}</p>
-              <p className="text-black/50 dark:text-white/50 mt-1">
+              <p className="text-black dark:text-white text-sm">{message.content}</p>
+              <p className="text-xs text-black/50 dark:text-white/50 mt-1">
                 {formatDistanceToNow(new Date(message.created_at), {
                   addSuffix: true,
                 })}
@@ -64,4 +64,3 @@ export default function MessagesList({ messages }: MessagesListProps) {
     </div>
   );
 }
-

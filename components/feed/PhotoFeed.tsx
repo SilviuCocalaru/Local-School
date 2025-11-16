@@ -39,7 +39,7 @@ export default function PhotoFeed() {
 
       setPosts(transformedPosts);
     } catch (error) {
-      console.error("Error loading posts:", error);
+      // Error handled silently - user sees empty state or retry
     } finally {
       setLoading(false);
     }
