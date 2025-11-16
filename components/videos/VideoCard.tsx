@@ -124,7 +124,7 @@ export default function VideoCard({ video, onSwipe, isActive }: VideoCardProps) 
       />
 
       {/* Overlay Content */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-0 right-0 p-4 pb-24">
           {/* User Info */}
           <div className="flex items-center gap-3 mb-4">
