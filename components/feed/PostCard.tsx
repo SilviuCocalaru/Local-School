@@ -180,38 +180,54 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
     setTimeout(() => ripple.remove(), 600);
   };
 
+  // Truncate long captions with "Read more"
+  const truncateCaption = (text: string, lines: number = 3) => {
+    const textLines = text.split("\n");
+    if (textLines.length > lines) {
+      return textLines.slice(0, lines).join("\n") + "...";
+    }
+    return text;
+  };
+
   return (
-    <div className="mx-0 sm:mx-4 md:mx-6 mb-4 sm:mb-6 group">
-      {/* Card with enhanced glass effect and depth */}
-      <div className="rounded-[24px] sm:rounded-[32px] bg-white/8 dark:bg-white/5 backdrop-blur-xl saturate-110 border border-white/25 dark:border-white/15 shadow-depth-lg overflow-hidden transition-all duration-300 hover:shadow-depth-lg hover:border-white/35 dark:hover:border-white/25 hover:bg-white/12 dark:hover:bg-white/8">
-    
-        {/* Post Header */}
-        <div className="flex items-center justify-between p-4 sm:p-5 bg-gradient-to-br from-white/5 to-transparent dark:from-white/2 dark:to-transparent">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/15 dark:bg-white/10 backdrop-blur-xl border border-white/30 dark:border-white/20 overflow-hidden ring-2 ring-white/10 dark:ring-white/5 transition-all duration-300 hover:ring-white/20 dark:hover:ring-white/10">
+    <div className="w-full max-w-2xl mx-auto mb-4 sm:mb-6">
+      {/* Clean Instagram-style card */}
+      <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+        
+        {/* Post Header - Avatar, Username, Timestamp, Menu */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+          <div className="flex items-center gap-3">
+            {/* Avatar */}
+            <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-900 overflow-hidden flex-shrink-0">
               {post.user?.avatar_url ? (
                 <Image
                   src={post.user.avatar_url}
                   alt={post.user.name}
-                  width={48}
-                  height={48}
+                  width={40}
+                  height={40}
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-white/10 dark:bg-white/5 flex items-center justify-center text-black dark:text-white font-semibold text-sm">
+                <div className="w-full h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-sm font-semibold text-gray-700 dark:text-gray-300">
                   {post.user?.name?.charAt(0).toUpperCase() || "U"}
                 </div>
               )}
             </div>
-            <div>
-              <p className="font-semibold text-xs sm:text-sm text-black dark:text-white">{post.user?.name}</p>
-              <p className="text-[10px] sm:text-xs text-black/60 dark:text-white/60">
+
+            {/* Username & Timestamp */}
+            <div className="min-w-0">
+              <p className="font-semibold text-sm text-black dark:text-white truncate">
+                {post.user?.name}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 {formatDistanceToNow(new Date(post.created_at), {
                   addSuffix: true,
                 })}
               </p>
             </div>
           </div>
+
+          {/* Menu */}
           <PostMenu
             postId={post.id}
             isOwner={isOwner}
@@ -219,144 +235,157 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
           />
         </div>
 
-        {/* Post Media - Enhanced with premium styling */}
+        {/* Post Image - Full width, no borders */}
         {post.type === "photo" && post.media_url && (
-          <div className="relative w-full aspect-[4/5] mx-4 sm:mx-5 mb-2 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/20 dark:border-white/10 shadow-lg group/media">
+          <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
             <Image
               src={post.media_url}
               alt={post.caption || "Post image"}
               fill
-              className="object-cover transition-transform duration-500 group-hover/media:scale-105"
-              sizes="(max-width: 428px) 100vw, 428px"
+              className="object-cover hover:scale-[1.02] transition-transform duration-300"
+              sizes="(max-width: 640px) 100vw, 640px"
             />
-            {/* Overlay gradient on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/media:opacity-100 transition-opacity duration-300" />
           </div>
         )}
 
-        {/* Post Actions - Premium circular buttons */}
-        <div className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-3 sm:space-y-4">
-          <div className="flex items-center gap-2 sm:gap-3">
+        {/* Action Buttons - Like, Comment, Share */}
+        <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+          <div className="flex items-center gap-4">
+            {/* Like Button */}
             <button
               onClick={(e) => {
                 createRipple(e);
                 handleLike();
               }}
-              className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full backdrop-blur-xl saturate-110 border flex items-center justify-center active:scale-95 transition-all relative overflow-hidden touch-target ring-2 ring-offset-2 ring-offset-white/5 dark:ring-offset-black/30 ${
-                isLiked
-                  ? "bg-white/20 dark:bg-white/15 border-white/40 dark:border-white/30 ring-red-500/50 hover:bg-white/25 dark:hover:bg-white/20"
-                  : "bg-white/8 dark:bg-white/5 border-white/25 dark:border-white/15 ring-white/10 hover:bg-white/12 dark:hover:bg-white/8 hover:ring-white/20"
-              }`}
+              className="p-2 -m-2 hover:opacity-60 transition-opacity duration-200 active:scale-90"
               title={`${likesCount} likes`}
             >
               <FiHeart
-                className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 ${
+                className={`w-6 h-6 transition-all duration-200 ${
                   isLiked
-                    ? "fill-red-500 text-red-500 scale-110"
-                    : "text-black/70 dark:text-white/80 hover:scale-110"
+                    ? "fill-red-500 text-red-500"
+                    : "text-black dark:text-white"
                 }`}
               />
             </button>
-            <span className="text-xs sm:text-sm font-semibold text-black dark:text-white min-w-[24px] sm:min-w-[30px] tabular-nums">
-              {likesCount}
-            </span>
 
+            {/* Comment Button */}
             <button
               onClick={(e) => {
                 createRipple(e);
                 setShowComments(!showComments);
               }}
-              className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full backdrop-blur-xl saturate-110 border flex items-center justify-center active:scale-95 transition-all relative overflow-hidden touch-target ring-2 ring-offset-2 ring-offset-white/5 dark:ring-offset-black/30 ${
-                showComments
-                  ? "bg-white/20 dark:bg-white/15 border-white/40 dark:border-white/30 ring-blue-500/50 hover:bg-white/25 dark:hover:bg-white/20"
-                  : "bg-white/8 dark:bg-white/5 border-white/25 dark:border-white/15 ring-white/10 hover:bg-white/12 dark:hover:bg-white/8 hover:ring-white/20"
-              }`}
+              className="p-2 -m-2 hover:opacity-60 transition-opacity duration-200 active:scale-90"
               title={`${comments.length} comments`}
             >
-              <FiMessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-black/70 dark:text-white/80 transition-all duration-300 group-hover:scale-110" />
+              <FiMessageCircle className="w-6 h-6 text-black dark:text-white" />
             </button>
-            <span className="text-xs sm:text-sm font-semibold text-black dark:text-white min-w-[24px] sm:min-w-[30px] tabular-nums">
-              {comments.length}
-            </span>
 
+            {/* Share Button */}
             <button
               onClick={(e) => {
                 createRipple(e);
                 handleShare();
               }}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/8 dark:bg-white/5 backdrop-blur-xl saturate-110 border border-white/25 dark:border-white/15 flex items-center justify-center hover:bg-white/12 dark:hover:bg-white/8 active:scale-95 transition-all relative overflow-hidden ml-auto touch-target ring-2 ring-offset-2 ring-offset-white/5 dark:ring-offset-black/30 ring-white/10 hover:ring-white/20"
+              className="p-2 -m-2 hover:opacity-60 transition-opacity duration-200 active:scale-90"
               title="Share"
             >
-              <FiShare2 className="w-4 h-4 sm:w-5 sm:h-5 text-black/70 dark:text-white/80 transition-all duration-300 group-hover:scale-110" />
+              <FiShare2 className="w-6 h-6 text-black dark:text-white" />
             </button>
           </div>
+        </div>
 
-          {/* Caption */}
-          {post.caption && (
-              <p className="text-xs sm:text-sm text-black dark:text-white leading-relaxed px-1">
-                <span className="font-semibold text-black dark:text-white/95">{post.user?.name}</span>{" "}
-                <span className="text-black/80 dark:text-white/75">{post.caption}</span>
-              </p>
-          )}
-
-          {/* Comments Section */}
-          {showComments && (
-            <div className="space-y-3 pt-4 border-t border-white/15 dark:border-white/10 animate-in fade-in duration-200">
-              {comments.length > 0 ? (
-                <div className="space-y-3 max-h-48 overflow-y-auto">
-                  {comments.map((comment) => (
-                    <div key={comment.id} className="flex gap-3 group/comment">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/12 dark:bg-white/8 backdrop-blur-lg border border-white/20 dark:border-white/15 overflow-hidden flex-shrink-0 ring-2 ring-white/5">
-                        {comment.user?.avatar_url ? (
-                          <Image
-                            src={comment.user.avatar_url}
-                            alt={comment.user.name}
-                            width={40}
-                            height={40}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-white/10 dark:bg-white/5 flex items-center justify-center text-black dark:text-white text-xs font-semibold">
-                            {comment.user?.name?.charAt(0).toUpperCase() || "U"}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 bg-white/8 dark:bg-white/5 backdrop-blur-lg rounded-2xl px-3 sm:px-4 py-2 border border-white/15 dark:border-white/10 transition-all duration-300 group-hover/comment:bg-white/12 dark:group-hover/comment:bg-white/8">
-                        <p className="text-xs sm:text-sm">
-                          <span className="font-semibold text-black dark:text-white">
-                            {comment.user?.name}
-                          </span>{" "}
-                          <span className="text-black/75 dark:text-white/75">{comment.content}</span>
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-black/60 dark:text-white/60 text-xs sm:text-sm">
-                  No comments yet
-                </p>
-              )}
-
-              <form onSubmit={handleComment} className="flex gap-2">
-                <input
-                  type="text"
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  placeholder="Add a comment..."
-                  className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl sm:rounded-[24px] bg-white/8 dark:bg-white/5 backdrop-blur-xl saturate-110 border border-white/25 dark:border-white/15 text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-white/35 dark:focus:border-white/25 text-xs sm:text-sm transition-all duration-300 hover:bg-white/12 dark:hover:bg-white/8"
-                />
-                <button
-                  type="submit"
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/12 dark:bg-white/8 backdrop-blur-xl saturate-110 border border-white/30 dark:border-white/20 flex items-center justify-center text-black dark:text-white font-semibold hover:bg-white/18 dark:hover:bg-white/12 active:scale-95 transition-all duration-300 touch-target hover:ring-2 hover:ring-white/30 dark:hover:ring-white/20"
-                  title="Post comment"
-                >
-                  <span className="text-sm sm:text-base">✓</span>
-                </button>
-              </form>
-            </div>
+        {/* Like Count */}
+        <div className="px-4 py-2 font-semibold text-sm text-black dark:text-white">
+          {likesCount > 0 && (
+            <span>{likesCount} {likesCount === 1 ? "like" : "likes"}</span>
           )}
         </div>
+
+        {/* Caption */}
+        {post.caption && (
+          <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-800">
+            <p className="text-sm text-black dark:text-white leading-snug">
+              <span className="font-semibold">{post.user?.name}</span>{" "}
+              <span className="text-gray-800 dark:text-gray-200">
+                {truncateCaption(post.caption, 2)}
+              </span>
+            </p>
+          </div>
+        )}
+
+        {/* Comments Count Link */}
+        {comments.length > 0 && !showComments && (
+          <button
+            onClick={() => setShowComments(true)}
+            className="w-full px-4 py-2 text-left text-sm text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
+          >
+            View all {comments.length} {comments.length === 1 ? "comment" : "comments"}
+          </button>
+        )}
+
+        {/* Comments Section */}
+        {showComments && (
+          <div className="border-t border-gray-200 dark:border-gray-800">
+            {/* Comments List */}
+            {comments.length > 0 ? (
+              <div className="divide-y divide-gray-200 dark:divide-gray-800 max-h-64 overflow-y-auto">
+                {comments.map((comment) => (
+                  <div key={comment.id} className="px-4 py-3 flex gap-3">
+                    {/* Comment Avatar */}
+                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-900 overflow-hidden flex-shrink-0">
+                      {comment.user?.avatar_url ? (
+                        <Image
+                          src={comment.user.avatar_url}
+                          alt={comment.user.name}
+                          width={32}
+                          height={32}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-semibold text-gray-600 dark:text-gray-400">
+                          {comment.user?.name?.charAt(0).toUpperCase() || "U"}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Comment Content */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-black dark:text-white">
+                        <span className="font-semibold">{comment.user?.name}</span>{" "}
+                        <span className="text-gray-800 dark:text-gray-200">
+                          {comment.content}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                No comments yet
+              </p>
+            )}
+
+            {/* Comment Input */}
+            <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-800 flex gap-2">
+              <input
+                type="text"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Add a comment..."
+                className="flex-1 px-3 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all duration-200"
+              />
+              <button
+                onClick={handleComment}
+                disabled={!commentText.trim()}
+                className="px-3 py-2 text-sm font-semibold text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 disabled:text-gray-300 dark:disabled:text-gray-700 disabled:cursor-not-allowed transition-colors duration-200"
+              >
+                Post
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

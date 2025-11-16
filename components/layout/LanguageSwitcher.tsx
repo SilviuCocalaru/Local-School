@@ -1,71 +1,76 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiGlobe } from "react-icons/fi";
+import { useI18n } from "@/lib/i18n/i18nProvider";
+import type { Language } from "@/lib/i18n/translations";
 
 export default function LanguageSwitcher() {
-  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguageState] = useState<string>("en");
+  const { language, setLanguage } = useI18n();
 
-  // All hooks called unconditionally at top level
-  useEffect(() => {
-    setMounted(true);
-    // Load language from localStorage on mount
-    const savedLang = localStorage.getItem("language") || "en";
-    setLanguageState(savedLang);
-  }, []);
+  const languages: Array<{ code: Language; name: string; flag: string }> = [
+    { code: "en", name: "English", flag: "🇬🇧" },
+    { code: "ro", name: "Română", flag: "🇷🇴" },
+    { code: "ru", name: "Русский", flag: "🇷🇺" },
+  ];
 
-  if (!mounted) return null;
-
-  const setLanguage = (lang: string) => {
-    setLanguageState(lang);
+  const handleLanguageChange = (lang: Language) => {
+    setLanguage(lang);
     localStorage.setItem("language", lang);
-    // Trigger a custom event to notify app of language change
-    window.dispatchEvent(new CustomEvent("language-changed", { detail: { language: lang } }));
-    // Force page rerender by dispatching storage event
-    window.dispatchEvent(new StorageEvent("storage", {
-      key: "language",
-      newValue: lang,
-      oldValue: language,
-      storageArea: localStorage,
+    setIsOpen(false);
+    
+    // Dispatch global language change event for any listeners
+    window.dispatchEvent(new CustomEvent("language-changed", { 
+      detail: { language: lang } 
     }));
   };
 
-  const languages = [
-    { code: "en", name: "English" },
-    { code: "ro", name: "Română" },
-    { code: "ru", name: "Русский" },
-  ];
-
   return (
     <div className="relative">
+      {/* Language selector button with visual indicator */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 hover:bg-white/10 dark:hover:bg-white/5 rounded-full transition-colors pointer-events-auto"
-        aria-label="Language"
+        className="p-2 hover:bg-white/10 dark:hover:bg-white/5 rounded-full transition-colors pointer-events-auto hover:scale-110 transform duration-200"
+        aria-label="Change language"
+        aria-expanded={isOpen}
+        title={`Current: ${language.toUpperCase()}`}
         type="button"
       >
         <FiGlobe className="w-5 h-5" />
       </button>
 
+      {/* Language dropdown menu with active indicator */}
       {isOpen && (
-        <div className="absolute bottom-full right-0 mb-2 bg-white/10 dark:bg-black/50 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl overflow-hidden shadow-lg z-50">
-          {languages.map((lang) => (
-            <button
-              key={lang.code}
-              onClick={() => {
-                setLanguage(lang.code);
-                setIsOpen(false);
-              }}
-              type="button"
-              className={`w-full px-4 py-2 text-left hover:bg-white/20 dark:hover:bg-white/10 transition-colors pointer-events-auto ${
-                language === lang.code ? "bg-blue-500/30 font-medium" : ""
-              }`}
-            >
-              {lang.name}
-            </button>
-          ))}
+        <div 
+          className="absolute bottom-full right-0 mb-2 bg-white/10 dark:bg-black/50 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl overflow-hidden shadow-lg z-50 min-w-48"
+          role="menu"
+        >
+          {languages.map((lang) => {
+            const isActive = language === lang.code;
+            return (
+              <button
+                key={lang.code}
+                onClick={() => handleLanguageChange(lang.code)}
+                type="button"
+                role="menuitem"
+                aria-current={isActive ? "true" : undefined}
+                className={`w-full px-4 py-3 text-left hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 pointer-events-auto flex items-center justify-between group ${
+                  isActive 
+                    ? "bg-blue-500/40 dark:bg-blue-600/40 font-semibold text-blue-600 dark:text-blue-300 border-l-2 border-blue-500" 
+                    : "hover:pl-5"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">{lang.flag}</span>
+                  <span>{lang.name}</span>
+                </div>
+                {isActive && (
+                  <span className="text-sm font-bold text-blue-600 dark:text-blue-300">✓</span>
+                )}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

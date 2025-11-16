@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { FiSearch, FiX, FiUserPlus, FiMessageCircle } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import { User } from "@/types";
+import { User, Post } from "@/types";
 import Image from "next/image";
+import PostSearchModal from "@/components/search/PostSearchModal";
 
 interface SearchBarProps {
   compact?: boolean;
@@ -13,6 +14,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ compact = false }: SearchBarProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
@@ -95,46 +97,22 @@ export default function SearchBar({ compact = false }: SearchBarProps) {
   };
 
   return (
-    <div ref={searchRef} className="relative">
-      <motion.button
-        whileTap={{ scale: 0.95 }}
-        whileHover={{ scale: 1.05 }}
-        onClick={() => setIsExpanded(!isExpanded)}
-        className={`rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 flex items-center justify-center hover:bg-white/10 dark:hover:bg-black/40 transition-all duration-300 touch-target ${
-          isExpanded ? "w-full h-10 sm:h-11 md:h-12 px-3 sm:px-4" : compact ? "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12" : "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12"
-        }`}
-      >
-        <FiSearch className="w-4 h-4 sm:w-5 sm:h-5 text-black/70 dark:text-white/70 flex-shrink-0" />
-        {isExpanded && (
-          <motion.input
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "100%", opacity: 1 }}
-            type="text"
-            placeholder="Search users..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 bg-transparent border-none outline-none text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 text-sm"
-            autoFocus
-          />
-        )}
-        {isExpanded && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              setSearchQuery("");
-              setResults([]);
-            }}
-            className="p-1 hover:bg-black/5 dark:hover:bg-white/5 rounded-full"
-          >
-            <FiX className="text-lg" />
-          </motion.button>
-        )}
-      </motion.button>
+    <>
+      <div ref={searchRef} className="relative">
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
+          onClick={() => setIsSearchModalOpen(true)}
+          className={`rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 flex items-center justify-center hover:bg-white/10 dark:hover:bg-black/40 transition-all duration-300 touch-target ${
+            compact ? "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12" : "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12"
+          }`}
+          title="Search posts and users"
+        >
+          <FiSearch className="w-4 h-4 sm:w-5 sm:h-5 text-black/70 dark:text-white/70 flex-shrink-0" />
+        </motion.button>
 
-      <AnimatePresence>
-        {isExpanded && (searchQuery.trim() || results.length > 0) && (
+        <AnimatePresence>
+        {isExpanded && searchQuery.trim() && results.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -204,6 +182,13 @@ export default function SearchBar({ compact = false }: SearchBarProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+      </div>
+
+      {/* Post Search Modal */}
+      <PostSearchModal
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+      />
+    </>
   );
 }
