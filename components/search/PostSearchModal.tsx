@@ -213,7 +213,7 @@ export default function PostSearchModal({
             transition={{ type: "spring", duration: 0.3 }}
             className="fixed inset-x-0 top-0 sm:top-1/2 sm:-translate-y-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-2xl mx-4 sm:mx-0 z-50"
           >
-            <div className="rounded-2xl sm:rounded-3xl bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl overflow-hidden">
+            <div className="floating-modal overflow-hidden">
               {/* Header */}
               <div className="p-4 sm:p-6 border-b border-white/10 dark:border-white/5">
                 <div className="flex items-center gap-3">

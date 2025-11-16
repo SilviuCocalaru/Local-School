@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiHome, FiVideo, FiMessageCircle, FiUser, FiPlus, FiSearch } from "react-icons/fi";
@@ -13,19 +14,19 @@ const navItems = [
   { href: "/profile", icon: FiUser, label: "Profile" },
 ];
 
-export default function TopNav() {
+const TopNav = memo(function TopNav() {
   const pathname = usePathname();
 
-  const hapticFeedback = () => {
+  const hapticFeedback = useCallback(() => {
     if ('vibrate' in navigator) {
       navigator.vibrate(10);
     }
-  };
+  }, []);
 
-  const handleCreate = () => {
+  const handleCreate = useCallback(() => {
     hapticFeedback();
     window.location.href = "/create";
-  };
+  }, [hapticFeedback]);
 
   return (
     <nav className="fixed top-3 sm:top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] sm:w-auto max-w-xs sm:max-w-md lg:max-w-2xl">
@@ -37,7 +38,7 @@ export default function TopNav() {
           damping: 25, 
           stiffness: 200,
         }}
-        className="h-12 sm:h-14 md:h-16 px-3 sm:px-4 md:px-6 rounded-full bg-white/40 dark:bg-white/10 backdrop-blur-[20px] saturate-[180%] border border-white/50 dark:border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center gap-1.5 sm:gap-2 md:gap-3 overflow-hidden transition-all duration-300 hover:bg-white/45 dark:hover:bg-white/15"
+        className="h-12 sm:h-14 md:h-16 px-3 sm:px-4 md:px-6 floating-nav-bar flex items-center gap-1.5 sm:gap-2 md:gap-3 overflow-hidden transition-all duration-300"
       >
         {/* Logo/Title */}
         <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-black dark:text-white mr-1 sm:mr-2 md:mr-4 lg:mr-6 flex-shrink-0 truncate">
@@ -99,5 +100,7 @@ export default function TopNav() {
       </motion.div>
     </nav>
   );
-}
+});
+
+export default TopNav;
 

@@ -142,8 +142,8 @@ export default function UserProfile({
 
   return (
     <div className="w-full">
-      {/* Profile Header - Instagram Style */}
-      <div className="border-b border-white/10 pb-8 mb-8">
+      {/* Profile Header - Instagram Style with Floating Island */}
+      <div className="floating-island border-b border-transparent mb-8">
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
           {/* Avatar */}
           <div className="flex justify-center sm:justify-start flex-shrink-0">

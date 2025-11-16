@@ -125,7 +125,7 @@ export default function VideoCard({ video, onSwipe, isActive }: VideoCardProps) 
 
       {/* Overlay Content */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 left-0 right-0 p-4 pb-24">
+        <div className="absolute bottom-0 left-0 right-0 p-4 pb-24 floating-island-lg floating-island-hover pointer-events-auto">
           {/* User Info */}
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 rounded-full bg-white/15 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 flex items-center justify-center text-black dark:text-white font-semibold">

@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiHome, FiVideo, FiMessageCircle, FiUser } from "react-icons/fi";
@@ -12,14 +13,14 @@ const navItems = [
   { href: "/profile", icon: FiUser, label: "Profile" },
 ];
 
-export default function BottomNav() {
+const BottomNav = memo(function BottomNav() {
   const pathname = usePathname();
 
-  const hapticFeedback = () => {
+  const hapticFeedback = useCallback(() => {
     if ('vibrate' in navigator) {
       navigator.vibrate(10);
     }
-  };
+  }, []);
 
   return (
     <nav className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-md sm:max-w-lg md:max-w-2xl w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] pointer-events-auto">
@@ -33,7 +34,7 @@ export default function BottomNav() {
             stiffness: 200,
             delay: 0.1
           }}
-          className="h-16 sm:h-20 px-2 sm:px-4 rounded-[32px] sm:rounded-[40px] bg-white/5 backdrop-blur-[100px] saturate-[200%] brightness-[1.1] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex items-center justify-center gap-1 sm:gap-2"
+          className="h-16 sm:h-20 px-2 sm:px-4 floating-nav-bar flex items-center justify-center gap-1 sm:gap-2"
         >
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -90,5 +91,7 @@ export default function BottomNav() {
       </div>
     </nav>
   );
-}
+});
+
+export default BottomNav;
 

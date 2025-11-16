@@ -1,20 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState, useCallback, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import PostCard from "@/components/feed/PostCard";
 import { Post } from "@/types";
 
-export default function PhotoFeed() {
+const PhotoFeed = memo(function PhotoFeed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
   useEffect(() => {
     loadPosts();
-  }, []);
+  }, [loadPosts]);
 
-  const loadPosts = async () => {
+  const loadPosts = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("posts")
@@ -30,18 +30,19 @@ export default function PhotoFeed() {
 
       if (error) throw error;
 
-      // Transform data to match Post type
       const transformedPosts = (data || []).map((post: any) => ({
         ...post,
         user: post.user,
-        is_liked: false, // Will be updated with user's like status
+        is_liked: false,
       }));
 
       setPosts(transformedPosts);
     } catch (error) {
-      // Error handled silently - user sees empty state or retry
+      console.error("Error loading posts:", error);
     } finally {
       setLoading(false);
+    }
+  }, [supabase]);
     }
   };
 
@@ -75,16 +76,20 @@ export default function PhotoFeed() {
     );
   }
 
-  const handleDeletePost = (postId: string) => {
+  const handleDeletePost = useCallback((postId: string) => {
     setPosts((prevPosts) => prevPosts.filter((p) => p.id !== postId));
-  };
+  }, []);
+
+  const memoizedPosts = useMemo(() => posts, [posts]);
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {posts.map((post) => (
+    <div className="space-y-4 sm:space-y-6 w-full overflow-x-hidden">
+      {memoizedPosts.map((post) => (
         <PostCard key={post.id} post={post} onDelete={handleDeletePost} />
       ))}
     </div>
   );
-}
+});
+
+export default PhotoFeed;
 

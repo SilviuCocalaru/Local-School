@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { memo, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { Post } from "@/types";
@@ -14,7 +14,8 @@ interface PostCardProps {
   onDelete?: (postId: string) => void;
 }
 
-export default function PostCard({ post, onDelete }: PostCardProps) {
+// Memoized component to prevent unnecessary re-renders
+const PostCard = memo(function PostCard({ post, onDelete }: PostCardProps) {
   const [isLiked, setIsLiked] = useState(post.is_liked || false);
   const [likesCount, setLikesCount] = useState(post.likes_count || 0);
   const [showComments, setShowComments] = useState(false);
@@ -191,8 +192,8 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
 
   return (
     <div className="w-full max-w-2xl mx-auto mb-4 sm:mb-6">
-      {/* Clean Instagram-style card */}
-      <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+      {/* Clean Instagram-style card with floating island design */}
+      <div className="floating-island-lg floating-island-hover">
         
         {/* Post Header - Avatar, Username, Timestamp, Menu */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">

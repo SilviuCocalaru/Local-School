@@ -103,7 +103,7 @@ export default function SearchBar({ compact = false }: SearchBarProps) {
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.05 }}
           onClick={() => setIsSearchModalOpen(true)}
-          className={`rounded-full bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 flex items-center justify-center hover:bg-white/10 dark:hover:bg-black/40 transition-all duration-300 touch-target ${
+          className={`rounded-full glass-btn ${
             compact ? "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12" : "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12"
           }`}
           title="Search posts and users"
@@ -117,7 +117,7 @@ export default function SearchBar({ compact = false }: SearchBarProps) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 right-0 mt-2 rounded-xl sm:rounded-2xl md:rounded-3xl bg-white/5 dark:bg-black/30 backdrop-blur-[100px] saturate-[200%] border border-white/20 dark:border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.12)] max-h-64 sm:max-h-80 md:max-h-96 overflow-y-auto z-50"
+            className="absolute top-full left-0 right-0 mt-2 floating-modal max-h-64 sm:max-h-80 md:max-h-96 overflow-y-auto z-50"
           >
             {loading ? (
               <div className="p-4 text-center text-black/60 dark:text-white/60">
