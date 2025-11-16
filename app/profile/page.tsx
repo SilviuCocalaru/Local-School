@@ -1,20 +1,41 @@
+
 "use client";
+export const dynamic = 'force-dynamic';
 
-
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import UserProfile from "@/components/profile/UserProfile";
 import TopNav from "@/components/layout/TopNav";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 
-export default async function ProfilePage() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function ProfilePage() {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  if (!user) {
-    redirect("/auth/login");
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        router.replace("/auth/login");
+        return;
+      }
+      setUserId(user.id);
+      setLoading(false);
+    };
+    fetchUser();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="text-lg text-white">Loading profile...</span>
+      </div>
+    );
   }
 
   return (
@@ -24,7 +45,7 @@ export default async function ProfilePage() {
         <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-50">
           <ThemeToggle />
         </div>
-        <UserProfile userId={user.id} isOwnProfile={true} />
+        {userId && <UserProfile userId={userId} isOwnProfile={true} />}
       </div>
     </div>
   );
