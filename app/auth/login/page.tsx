@@ -44,10 +44,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="glass-strong rounded-3xl p-8 w-full max-w-md shadow-2xl animate-fade-in">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold mb-2 text-black dark:text-white">
             Welcome Back
           </h1>
-          <p className="text-white/70">Sign in to your account</p>
+          <p className="text-black/60 dark:text-white/70">Sign in to your account</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
@@ -68,7 +68,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm"
+                className="w-full pl-12 pr-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
                 placeholder="your@email.com"
               />
             </div>
@@ -85,7 +85,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent backdrop-blur-sm"
+                className="w-full pl-12 pr-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 focus:border-transparent backdrop-blur-sm"
                 placeholder="••••••••"
               />
             </div>
@@ -94,7 +94,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 glass-strong rounded-xl font-semibold text-black dark:text-white hover:bg-white/20 dark:hover:bg-black/40 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               "Signing in..."
@@ -107,11 +107,11 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-white/70 text-sm">
+          <p className="text-black/70 dark:text-white/70 text-sm">
             {"Don't have an account?"}{" "}
             <Link
               href="/auth/signup"
-              className="text-purple-300 hover:text-purple-200 font-medium transition-colors"
+              className="text-black/80 dark:text-white/90 hover:text-black dark:hover:text-white font-medium transition-colors"
             >
               Sign up
             </Link>

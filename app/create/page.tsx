@@ -211,14 +211,14 @@ function CreatePostContent() {
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="Write a caption..."
                   rows={4}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none"
+                  className="w-full px-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 resize-none backdrop-blur-sm"
                 />
               </div>
 
               <button
                 onClick={handleUpload}
                 disabled={uploading || !file}
-                className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 glass-strong rounded-xl font-semibold text-black dark:text-white hover:bg-white/20 dark:hover:bg-black/40 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {uploading ? (
                   "Uploading..."

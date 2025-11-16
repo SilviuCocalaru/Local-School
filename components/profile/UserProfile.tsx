@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { User, Post } from "@/types";
-import { FiSettings, FiUserPlus, FiUserCheck } from "react-icons/fi";
+import { FiUserPlus, FiUserCheck } from "react-icons/fi";
 import Image from "next/image";
-import PostCard from "@/components/feed/PostCard";
+import PostGrid from "./PostGrid";
 import LogoutButton from "./LogoutButton";
 
 interface UserProfileProps {
@@ -19,7 +19,6 @@ export default function UserProfile({
 }: UserProfileProps) {
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [isFriend, setIsFriend] = useState(false);
   const [friendshipStatus, setFriendshipStatus] = useState<
     "none" | "pending" | "accepted"
   >("none");
@@ -31,7 +30,7 @@ export default function UserProfile({
     if (!isOwnProfile) {
       checkFriendship();
     }
-  }, [userId]);
+  }, [userId, isOwnProfile]);
 
   const loadProfile = async () => {
     try {
@@ -88,7 +87,6 @@ export default function UserProfile({
     if (data) {
       if (data.status === "accepted") {
         setFriendshipStatus("accepted");
-        setIsFriend(true);
       } else {
         setFriendshipStatus("pending");
       }
@@ -128,93 +126,108 @@ export default function UserProfile({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="glass-strong rounded-2xl p-8">
-          <p className="text-white/70">Loading profile...</p>
-        </div>
+      <div className="flex items-center justify-center h-96">
+        <p className="text-white/70 text-lg">Loading profile...</p>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="glass-strong rounded-2xl p-8">
-          <p className="text-white/70">User not found</p>
-        </div>
+      <div className="flex items-center justify-center h-96">
+        <p className="text-white/70 text-lg">User not found</p>
       </div>
     );
   }
 
   return (
-    <div>
-      {/* Profile Header */}
-      <header className="glass-strong rounded-b-3xl p-6 mb-4">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-            Profile
-          </h1>
-          {isOwnProfile && (
-            <div className="flex items-center gap-2">
-              <button className="text-white/80 hover:text-white">
-                <FiSettings className="text-2xl" />
-              </button>
-              <LogoutButton />
+    <div className="w-full">
+      {/* Profile Header - Instagram Style */}
+      <div className="border-b border-white/10 pb-8 mb-8">
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+          {/* Avatar */}
+          <div className="flex justify-center sm:justify-start flex-shrink-0">
+            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-white/15 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 flex items-center justify-center text-black dark:text-white text-5xl sm:text-6xl font-bold flex-shrink-0">
+              {user.name.charAt(0).toUpperCase()}
             </div>
-          )}
-        </div>
-
-        <div className="flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center text-white text-3xl font-bold mb-4">
-            {user.name.charAt(0).toUpperCase()}
           </div>
-          <h2 className="text-2xl font-bold text-white mb-1">{user.name}</h2>
-          <p className="text-white/70 mb-4">{user.school}</p>
-          {user.bio && (
-            <p className="text-white/80 text-center mb-4">{user.bio}</p>
-          )}
 
-          {!isOwnProfile && (
-            <button
-              onClick={handleFriendRequest}
-              className={`px-6 py-2 rounded-xl font-semibold transition-all ${
-                friendshipStatus === "accepted"
-                  ? "bg-white/10 text-white"
-                  : "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600"
-              }`}
-            >
-              {friendshipStatus === "accepted" ? (
-                <>
-                  <FiUserCheck className="inline mr-2" />
-                  Friends
-                </>
-              ) : friendshipStatus === "pending" ? (
-                "Pending"
+          {/* User Info */}
+          <div className="flex-1">
+            {/* Name & Action Button */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+              <h1 className="text-2xl sm:text-3xl font-bold text-black dark:text-white">
+                {user.name}
+              </h1>
+              {!isOwnProfile ? (
+                <button
+                  onClick={handleFriendRequest}
+                  className={`px-6 py-2 rounded-lg font-semibold transition-all whitespace-nowrap ${
+                    friendshipStatus === "accepted"
+                      ? "glass-strong text-black dark:text-white hover:bg-white/20 dark:hover:bg-black/40"
+                      : "glass-strong text-black dark:text-white hover:bg-white/20 dark:hover:bg-black/40"
+                  }`}
+                >
+                  {friendshipStatus === "accepted" ? (
+                    <>
+                      <FiUserCheck className="inline mr-2" />
+                      Friends
+                    </>
+                  ) : friendshipStatus === "pending" ? (
+                    "Pending"
+                  ) : (
+                    <>
+                      <FiUserPlus className="inline mr-2" />
+                      Follow
+                    </>
+                  )}
+                </button>
               ) : (
-                <>
-                  <FiUserPlus className="inline mr-2" />
-                  Add Friend
-                </>
+                <LogoutButton />
               )}
-            </button>
-          )}
+            </div>
+
+            {/* Stats */}
+            <div className="flex gap-8 sm:gap-12 mb-6">
+              <div>
+                <p className="text-2xl sm:text-3xl font-bold text-black dark:text-white">
+                  {posts.length}
+                </p>
+                <p className="text-sm text-black/60 dark:text-white/60">Posts</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-bold text-black dark:text-white">
+                  0
+                </p>
+                <p className="text-sm text-black/60 dark:text-white/60">Followers</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-bold text-black dark:text-white">
+                  0
+                </p>
+                <p className="text-sm text-black/60 dark:text-white/60">Following</p>
+              </div>
+            </div>
+
+            {/* Bio & School */}
+            <div>
+              <p className="text-white font-semibold mb-1">{user.school}</p>
+              {user.bio && (
+                <p className="text-white/80 text-sm leading-relaxed">
+                  {user.bio}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-      </header>
+      </div>
 
       {/* Posts Grid */}
-      <div className="px-4">
-        <h3 className="text-xl font-semibold text-white mb-4">Posts</h3>
-        {posts.length === 0 ? (
-          <div className="glass-strong rounded-2xl p-8 text-center">
-            <p className="text-white/70">No posts yet</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        )}
+      <div>
+        <h2 className="text-lg font-bold text-white mb-6 uppercase tracking-wide text-white/60">
+          Posts
+        </h2>
+        <PostGrid posts={posts} />
       </div>
     </div>
   );

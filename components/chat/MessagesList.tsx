@@ -41,17 +41,17 @@ export default function MessagesList({ messages }: MessagesListProps) {
             <div
               className={`max-w-[75%] glass rounded-2xl p-3 ${
                 isOwn
-                  ? "bg-gradient-to-r from-purple-500/30 to-pink-500/30"
+                  ? "                  ? \"bg-white/15 dark:bg-black/40\"\n                  : \"bg-white/10 dark:bg-black/30\""
                   : "bg-white/10"
               }`}
             >
               {!isOwn && (
-                <p className="text-xs font-semibold text-white/80 mb-1">
+                <p className="text-xs font-semibold text-black/80 dark:text-white/80 mb-1">
                   {message.sender?.name}
                 </p>
               )}
-              <p className="text-white text-sm">{message.content}</p>
-              <p className="text-xs text-white/50 mt-1">
+              <p className=\"text-black dark:text-white text-sm\">{message.content}</p>
+              <p className="text-black/50 dark:text-white/50 mt-1">
                 {formatDistanceToNow(new Date(message.created_at), {
                   addSuffix: true,
                 })}

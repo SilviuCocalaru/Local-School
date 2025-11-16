@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Post } from "@/types";
 import { FiHeart, FiMessageCircle, FiShare2 } from "react-icons/fi";
 import { formatDistanceToNow } from "date-fns";
-import { motion } from "framer-motion";
+
 import PostMenu from "./PostMenu";
 
 interface PostCardProps {
@@ -181,17 +181,8 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ 
-        type: "spring",
-        stiffness: 300,
-        damping: 25,
-        mass: 1
-      }}
-      className="mx-0 sm:mx-4 md:mx-6 mb-4 sm:mb-6 rounded-[24px] sm:rounded-[32px] bg-white/5 dark:bg-black/30 backdrop-blur-[100px] saturate-[200%] border border-white/20 dark:border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.12)] overflow-hidden floating-element"
-    >
+    <div className="mx-0 sm:mx-4 md:mx-6 mb-4 sm:mb-6 rounded-[24px] sm:rounded-[32px] bg-white/5 dark:bg-black/30 backdrop-blur-[100px] saturate-[200%] border border-white/20 dark:border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.12)] overflow-hidden">
+    
       {/* Post Header */}
       <div className="flex items-center justify-between p-4 sm:p-5">
         <div className="flex items-center gap-2 sm:gap-3">
@@ -242,8 +233,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
       {/* Post Actions - Circular Buttons */}
       <div className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-3 sm:space-y-4">
         <div className="flex items-center gap-2 sm:gap-3">
-          <motion.button
-            whileTap={{ scale: 0.85 }}
+          <button
             onClick={(e) => {
               createRipple(e);
               handleLike();
@@ -262,13 +252,12 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
                   : "text-black/70 dark:text-white/80"
               }`}
             />
-          </motion.button>
+          </button>
           <span className="text-xs sm:text-sm font-medium text-black dark:text-white min-w-[24px] sm:min-w-[30px]">
             {likesCount}
           </span>
 
-          <motion.button
-            whileTap={{ scale: 0.85 }}
+          <button
             onClick={(e) => {
               createRipple(e);
               setShowComments(!showComments);
@@ -277,13 +266,12 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
             title={`${comments.length} comments`}
           >
             <FiMessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-black/70 dark:text-white/80" />
-          </motion.button>
+          </button>
           <span className="text-xs sm:text-sm font-medium text-black dark:text-white min-w-[24px] sm:min-w-[30px]">
             {comments.length}
           </span>
 
-          <motion.button
-            whileTap={{ scale: 0.85 }}
+          <button
             onClick={(e) => {
               createRipple(e);
               handleShare();
@@ -292,7 +280,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
             title="Share"
           >
             <FiShare2 className="w-4 h-4 sm:w-5 sm:h-5 text-black/70 dark:text-white/80" />
-          </motion.button>
+          </button>
         </div>
 
         {/* Caption */}
@@ -305,12 +293,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
 
         {/* Comments Section */}
         {showComments && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="space-y-3 pt-4 border-t border-black/10 dark:border-white/10"
-          >
+          <div className="space-y-3 pt-4 border-t border-black/10 dark:border-white/10">
             {comments.length > 0 ? (
               <div className="space-y-3 max-h-48 overflow-y-auto">
                 {comments.map((comment) => (
@@ -355,18 +338,17 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
                 placeholder="Add a comment..."
                 className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-[20px] sm:rounded-[24px] bg-white/5 dark:bg-black/30 backdrop-blur-[80px] saturate-[180%] border border-white/18 dark:border-white/10 text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 focus:border-black/30 dark:focus:border-white/30 text-xs sm:text-sm transition-all"
               />
-              <motion.button
-                whileTap={{ scale: 0.9 }}
+              <button
                 type="submit"
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 dark:bg-black/40 backdrop-blur-[80px] saturate-[180%] border border-white/20 dark:border-white/15 flex items-center justify-center text-black dark:text-white font-semibold hover:bg-white/15 dark:hover:bg-black/50 transition-all touch-target"
                 title="Post comment"
               >
                 <span className="text-sm sm:text-base">✓</span>
-              </motion.button>
+              </button>
             </form>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }

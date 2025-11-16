@@ -51,7 +51,7 @@ export default function PhotoFeed() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="mx-0 sm:mx-4 md:mx-6 rounded-[24px] sm:rounded-[32px] bg-white/5 backdrop-blur-[100px] saturate-[200%] brightness-[1.1] border border-white/20 p-4 animate-pulse"
+            className="mx-0 sm:mx-4 md:mx-6 rounded-[24px] sm:rounded-[32px] bg-white/5 backdrop-blur-[100px] saturate-[200%] brightness-[1.1] border border-white/20 p-4"
           >
             <div className="h-96 bg-white/10 rounded-3xl mb-4"></div>
             <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>

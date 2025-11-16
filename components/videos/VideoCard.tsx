@@ -128,7 +128,7 @@ export default function VideoCard({ video, onSwipe, isActive }: VideoCardProps) 
         <div className="absolute bottom-0 left-0 right-0 p-4 pb-24">
           {/* User Info */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center text-white font-semibold">
+            <div className="w-12 h-12 rounded-full bg-white/15 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 flex items-center justify-center text-black dark:text-white font-semibold">
               {video.user?.name?.charAt(0).toUpperCase() || "U"}
             </div>
             <div>

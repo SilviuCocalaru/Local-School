@@ -41,8 +41,8 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen">
       <TopNav />
-      <div className="max-w-2xl mx-auto pt-24 sm:pt-28 pb-20 px-4 sm:px-6">
-        <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-50">
+      <div className="max-w-2xl mx-auto pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-40">
           <ThemeToggle />
         </div>
         {userId && <UserProfile userId={userId} isOwnProfile={true} />}

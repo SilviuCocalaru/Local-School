@@ -162,7 +162,7 @@ export default function ChatRoom({ receiverId }: ChatRoomProps) {
           >
             <FiArrowLeft className="text-2xl" />
           </button>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center text-white font-semibold">
+          <div className="w-10 h-10 rounded-full bg-white/15 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 flex items-center justify-center text-black dark:text-white font-semibold">
             {receiver?.name?.charAt(0).toUpperCase() || "U"}
           </div>
           <div>
@@ -183,11 +183,11 @@ export default function ChatRoom({ receiverId }: ChatRoomProps) {
             value={messageText}
             onChange={(e) => setMessageText(e.target.value)}
             placeholder="Type a message..."
-            className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-400"
+            className="flex-1 px-4 py-3 bg-white/10 dark:bg-black/30 border border-white/20 dark:border-white/10 rounded-xl text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 backdrop-blur-sm"
           />
           <button
             type="submit"
-            className="px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl text-white hover:from-purple-600 hover:to-pink-600 transition-all"
+            className="px-4 py-3 glass-strong rounded-xl text-black dark:text-white hover:bg-white/20 dark:hover:bg-black/40 transition-all"
           >
             <FiSend />
           </button>
