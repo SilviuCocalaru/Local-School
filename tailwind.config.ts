@@ -59,6 +59,9 @@ const config: Config = {
           "100%": { transform: "scale(1)" },
         },
       },
+      spacing: {
+        safe: "env(safe-area-inset-bottom)",
+      },
     },
   },
   plugins: [],

@@ -15,9 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sf-pro antialiased">
+      <body className="font-sf-pro antialiased pb-safe">
         <ThemeProvider>
-          {children}
+          <main className="pb-32 sm:pb-36 md:pb-40">
+            {children}
+          </main>
           <LiquidGlassNav />
         </ThemeProvider>
       </body>
