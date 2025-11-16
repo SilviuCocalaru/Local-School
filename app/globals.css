@@ -1,0 +1,488 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+}
+
+.light {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+}
+
+body {
+  color: rgb(var(--foreground));
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Pure Liquid Glass Background - Neutral Gray */
+body {
+  position: relative;
+  background: linear-gradient(to bottom right, #f5f5f7, #e5e5ea);
+}
+
+.dark body {
+  background: linear-gradient(to bottom right, #1c1c1e, #000000);
+}
+
+/* ============================================
+   REAL iOS 26 LIQUID GLASS MATERIAL SYSTEM
+   ============================================ */
+
+/* Pure Liquid Glass - Base (Inactive/Default) */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(80px) saturate(180%);
+  -webkit-backdrop-filter: blur(80px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.12);
+  transform: translateZ(0);
+  will-change: backdrop-filter, transform;
+}
+
+.dark .liquid-glass {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(80px) saturate(180%);
+  -webkit-backdrop-filter: blur(80px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Active/Selected Glass (Darker, Not Colored) */
+.liquid-glass-active {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.dark .liquid-glass-active {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Strong Liquid Glass - For floating elements */
+.liquid-glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 20px 60px rgba(0, 0, 0, 0.15);
+  transform: translateZ(0);
+  will-change: backdrop-filter, transform;
+}
+
+.dark .liquid-glass-strong {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Floating Liquid Glass - For cards that float */
+.liquid-glass-floating {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.12);
+  transform: translateZ(0);
+}
+
+.dark .liquid-glass-floating {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* Legacy support (backward compatibility) */
+.glass {
+  @apply liquid-glass;
+}
+
+.glass-strong {
+  @apply liquid-glass-strong;
+}
+
+.glass-frosted {
+  @apply liquid-glass-floating;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Smooth transitions - GPU accelerated */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Force GPU acceleration for glass elements */
+.liquid-glass,
+.liquid-glass-strong,
+.liquid-glass-floating,
+.circular-button,
+.circular-primary {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform, backdrop-filter;
+}
+
+/* Minimum border radius for all elements (NO SQUARES!) - iOS 26 Extreme Roundedness */
+.card,
+.post-card,
+.modal,
+.sheet {
+  border-radius: 32px;
+  min-height: 0;
+}
+
+/* Even more rounded for floating elements */
+.floating-card {
+  border-radius: 40px;
+}
+
+/* Perfect circles for avatars */
+.avatar-circle {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* ============================================
+   CIRCULAR UI & ANIMATIONS
+   ============================================ */
+
+/* Circular Button Base - Pure Glass */
+.circular-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(80px) saturate(180%);
+  -webkit-backdrop-filter: blur(80px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform, scale;
+}
+
+.circular-button:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.dark .circular-button {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.dark .circular-button:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.circular-button:active {
+  transform: scale(0.95);
+}
+
+/* Active Circular Button (Darker Glass) */
+.circular-button-active {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(100px) saturate(200%);
+  -webkit-backdrop-filter: blur(100px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dark .circular-button-active {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Pill Button (for text buttons) */
+.pill-button {
+  height: 48px;
+  padding: 0 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Ripple Effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+  animation: ripple 0.6s ease-out;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.floating-element {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Liquid Morph Animation */
+@keyframes liquidMorph {
+  0% {
+    border-radius: 50%;
+    transform: scale(0.8);
+  }
+  50% {
+    border-radius: 32px;
+    transform: scale(1.05);
+  }
+  100% {
+    border-radius: 32px;
+    transform: scale(1);
+  }
+}
+
+.liquid-morph {
+  animation: liquidMorph 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Button Press with Haptic */
+.button-press:active {
+  transform: scale(0.95);
+  animation: none;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - ALL DEVICES
+   ============================================ */
+
+/* Mobile (320px - 640px) */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+  
+  /* Smaller navigation buttons on very small screens */
+  .nav-btn-mobile {
+    width: 56px;
+    height: 56px;
+  }
+  
+  /* Adjust header padding */
+  .header-mobile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Tighter post card margins */
+  .post-card-mobile {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+/* Tablet (641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Center content with max width */
+  .container-tablet {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Slightly larger navigation */
+  .nav-tablet {
+    max-width: 600px;
+  }
+  
+  /* Post cards with more spacing */
+  .post-card-tablet {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  /* Center content with max width for readability */
+  .container-desktop {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Simple light-mode text fix
+     Keep other styles unchanged; force elements
+     using `text-white` (or variants) to show black
+     text in the `.light` theme so things are visible.
+  */
+.light [class*="text-white"] {
+  color: #000 !important;
+}
+
+.light [class*="placeholder-white"]::placeholder {
+  color: #000 !important;
+}
+  
+  /* Navigation stays centered */
+  .nav-desktop {
+    max-width: 600px;
+  }
+  
+  /* Post cards with comfortable spacing */
+  .post-card-desktop {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  
+  /* Larger touch targets on desktop (hover states) */
+  .button-desktop:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Header adjustments for desktop */
+  .header-desktop {
+    max-width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  /* Optional: Sidebar or wider layout */
+  .container-large {
+    max-width: 800px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets on mobile */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .no-hover:hover {
+    transform: none;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  /* Adjust header height */
+  .header-landscape {
+    height: 56px;
+  }
+  
+  /* Smaller navigation in landscape */
+  .nav-landscape {
+    height: 64px;
+    padding: 0.5rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper borders and shadows */
+  .high-dpi {
+    border-width: 0.5px;
+  }
+}
+
+/* Prevent text selection on mobile for better UX */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
